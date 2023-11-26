@@ -2,6 +2,20 @@
 # mongo-express:0.54.0 container is a web-based MongoDB admin interface
 version: '3'
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 80
+      TOKEN: bot:token
+      MONGO: mongodb://root:example@mongo:27017/admin
+    ports:
+      - "80:8086"
+    depends_on:
+      - mongo
+
   mongo:
     image: mongo:4.0
     volumes:
