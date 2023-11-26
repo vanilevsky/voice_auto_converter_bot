@@ -1,5 +1,15 @@
 {
- "schemaVersion" :2 ,
- "templateId" :"node/16.11"
-}
-
+  "schemaVersion": 2,
+  "dockerfileLines": [
+        "FROM node:16.11-alpine",
+        "RUN mkdir -p /usr/src/app",
+        "WORKDIR /usr/src/app",
+        "COPY ./package.json /usr/src/app/",
+        "RUN npm install yarn -g && yarn",
+        "COPY ./ /usr/src/app",
+        "ENV NODE_ENV production",
+        "ENV PORT 80",
+        "EXPOSE 80",
+        "CMD [ \"yarn\", \"distribute\" ]"
+    ]
+ }
