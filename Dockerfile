@@ -15,4 +15,4 @@ COPY ./ /usr/src/app
 
 EXPOSE 80
 
-# CMD ["yarn", "distribute"]
+CMD ["yarn", "run", "distribute"]
