@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dev.Dockerfile
     environment:
       NODE_ENV: production
       PORT: 80
@@ -11,6 +11,8 @@ services:
       - 80:8086
     depends_on:
       - mongo
+    volumes:
+      - .:/usr/src/app
 
   mongo:
     image: mongo:4.0
