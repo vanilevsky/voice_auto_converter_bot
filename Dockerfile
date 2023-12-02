@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json yarn.lock ./
 
-#RUN yarn install
+RUN yarn install
 
 ENV NODE_ENV production
 ENV PORT 80
