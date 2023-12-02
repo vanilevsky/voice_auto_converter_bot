@@ -2127,38 +2127,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"telegram-bot-starter@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "telegram-bot-starter@workspace:."
-  dependencies:
-    "@grammyjs/i18n": ^0.5.0
-    "@grammyjs/menu": ^1.0.4
-    "@grammyjs/runner": ^1.0.3
-    "@typegoose/typegoose": ^9.3.1
-    "@types/js-yaml": ^4.0.5
-    "@types/node": ^16.11.12
-    "@typescript-eslint/eslint-plugin": ^5.6.0
-    "@typescript-eslint/parser": ^5.6.0
-    dotenv: ^10.0.0
-    envalid: ^7.2.2
-    eslint: ^8.4.1
-    eslint-config-prettier: ^8.3.0
-    eslint-plugin-import: ^2.25.3
-    eslint-plugin-no-relative-import-paths: ^1.0.8
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-sort-imports-es6-autofix: ^0.6.0
-    grammy: ^1.5.0
-    grammy-middlewares: ^1.0.11
-    module-alias: ^2.2.2
-    mongoose: ^6.1.0
-    prettier: ^2.5.1
-    source-map-support: ^0.5.21
-    tsc-watch: ^4.5.0
-    typescript: ^4.5.2
-  languageName: unknown
-  linkType: soft
-
 "text-table@npm:^0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -2315,6 +2283,38 @@ __metadata:
   checksum: adb0a271eaa2297f2f4c536acbfee872d0dd26ec2d76f66921aa7fc437319132773483344207bdbeee169225f4739016d8d2dbf0553913a52bb34da6d0334f8e
   languageName: node
   linkType: hard
+
+"voice_auto_converter_bot@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "voice_auto_converter_bot@workspace:."
+  dependencies:
+    "@grammyjs/i18n": ^0.5.0
+    "@grammyjs/menu": ^1.0.4
+    "@grammyjs/runner": ^1.0.3
+    "@typegoose/typegoose": ^9.3.1
+    "@types/js-yaml": ^4.0.5
+    "@types/node": ^16.11.12
+    "@typescript-eslint/eslint-plugin": ^5.6.0
+    "@typescript-eslint/parser": ^5.6.0
+    dotenv: ^10.0.0
+    envalid: ^7.2.2
+    eslint: ^8.4.1
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-import: ^2.25.3
+    eslint-plugin-no-relative-import-paths: ^1.0.8
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-sort-imports-es6-autofix: ^0.6.0
+    grammy: ^1.5.0
+    grammy-middlewares: ^1.0.11
+    module-alias: ^2.2.2
+    mongoose: ^6.1.0
+    prettier: ^2.5.1
+    source-map-support: ^0.5.21
+    tsc-watch: ^4.5.0
+    typescript: ^4.5.2
+  languageName: unknown
+  linkType: soft
 
 "webidl-conversions@npm:^3.0.0":
   version: 3.0.1

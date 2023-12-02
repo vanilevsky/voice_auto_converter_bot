@@ -1,9 +1,9 @@
 {
-  "name": "telegram-bot-starter",
+  "name": "voice_auto_converter_bot",
   "version": "1.0.0",
-  "description": "Telegram bot starter based on grammY",
+  "description": "Telegram bot for voice auto converting",
   "main": "dist/app.js",
-  "repository": "https://github.com/Borodutch/telegram-bot-template",
+  "repository": "https://github.com/vanilevsky/voice_auto_converter_bot",
   "author": "backmeupplz <backmeupplz@gmail.com>",
   "license": "MIT",
   "scripts": {
