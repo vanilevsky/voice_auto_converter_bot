@@ -7,8 +7,6 @@ services:
     environment:
       NODE_ENV: production
       PORT: 80
-      TOKEN: bot:token
-      MONGO: mongodb://root:example@mongo:27017/admin
     ports:
       - 80:8086
     depends_on:
