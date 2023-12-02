@@ -17,4 +17,4 @@ FROM node:18.12.0-alpine
 #
 #CMD ["yarn", "distribute"]
 
-CMD ["true"]
+CMD ["tail", "-f", "/dev/null"]
