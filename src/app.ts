@@ -13,6 +13,7 @@ import languageMenu from '@/menus/language'
 import sendHelp from '@/handlers/help'
 import startMongo from '@/helpers/startMongo'
 import handleMessage from "@/handlers/message";
+import { hydrateFiles } from "@grammyjs/files";
 
 async function runApp() {
   console.log('Starting app...')
@@ -28,6 +29,10 @@ async function runApp() {
     .use(configureI18n)
     // Menus
     .use(languageMenu)
+
+  // Plugins
+  bot.api.config.use(hydrateFiles(bot.token))
+
   // Commands
   bot.command(['help', 'start'], sendHelp)
   bot.command('language', handleLanguage)
