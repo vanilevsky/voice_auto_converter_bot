@@ -12,8 +12,8 @@ import i18n from '@/helpers/i18n'
 import languageMenu from '@/menus/language'
 import sendHelp from '@/handlers/help'
 import startMongo from '@/helpers/startMongo'
-import handleMessage from "@/handlers/message";
 import { hydrateFiles } from "@grammyjs/files";
+import handleVoices from "@/handlers/voices";
 
 async function runApp() {
   console.log('Starting app...')
@@ -38,7 +38,7 @@ async function runApp() {
   bot.command('language', handleLanguage)
 
   // Events
-  bot.on('message', handleMessage);
+  bot.on([":voice", ":video_note"], handleVoices)
 
   // Errors
   bot.catch(console.error)
