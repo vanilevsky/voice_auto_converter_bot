@@ -15,6 +15,7 @@
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src"
   },
   "dependencies": {
+    "@grammyjs/files": "^1.0.4",
     "@grammyjs/i18n": "^0.5.0",
     "@grammyjs/menu": "^1.0.4",
     "@grammyjs/runner": "^1.0.3",
@@ -22,7 +23,8 @@
     "envalid": "^7.2.2",
     "grammy": "^1.5.0",
     "grammy-middlewares": "^1.0.11",
-    "mongoose": "^8.0.2"
+    "mongoose": "^8.0.2",
+    "openai": "^4.20.1"
   },
   "devDependencies": {
     "@typegoose/typegoose": "^12.0.0",
