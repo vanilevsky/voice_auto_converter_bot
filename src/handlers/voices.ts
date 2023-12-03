@@ -23,7 +23,7 @@ export default async function handleVoices(ctx: Context) {
   });
 
   const buffer = await fsPromises.readFile(filePath);
-  const transcriptionText = await transcription(buffer, fileName, ctx.from?.language_code);
+  const transcriptionText = await transcription(buffer, fileName, ctx.dbuser.language);
 
   const text = '🔊 ' + transcriptionText
   await bot.api.sendMessage(chatId, text, {
