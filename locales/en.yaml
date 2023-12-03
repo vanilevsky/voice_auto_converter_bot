@@ -1,5 +1,5 @@
 name: English
 help: |
-  <b>This bot</b> allows you to see how Telegram bots can be built.
+  <b>Bot</b> for transcribing voice messages and circles into text.
 language: Please, select the language.
 language_selected: <b>This bot</b> now speaks English.
