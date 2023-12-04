@@ -22,8 +22,10 @@ export default async function handleVoices(ctx: Context) {
     return
   });
 
-  const buffer = await fsPromises.readFile(filePath);
-  const transcriptionText = await transcription(buffer, fileName, ctx.dbuser.language);
+  const buffer = await fsPromises.readFile(filePath)
+  const lang = ctx.dbuser.language
+  const prompt = ctx.i18n.t('whisper_prompt')
+  const transcriptionText = await transcription(buffer, fileName, lang, prompt)
 
   const text = '🔊 ' + transcriptionText
   await bot.api.sendMessage(chatId, text, {

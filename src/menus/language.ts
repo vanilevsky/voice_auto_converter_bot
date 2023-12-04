@@ -21,12 +21,7 @@ const localeFile = (path: string) => {
 const setLanguage = (languageCode: string) => async (ctx: Context) => {
   ctx.dbuser.language = languageCode
 
-
-  console.log('await ctx.dbuser.save()', languageCode)
-
   const res = await ctx.dbuser.save()
-
-  console.log(res)
 
   ctx.i18n.locale(languageCode)
   return ctx.editMessageText(ctx.i18n.t('language_selected'), {
@@ -38,8 +33,6 @@ const setLanguage = (languageCode: string) => async (ctx: Context) => {
 const languageMenu = new Menu<Context>('language')
 
 localeFilePaths.forEach((localeFilePath, index) => {
-
-  console.log(localeFilePath, index)
 
   const localeCode = localeFilePath.split('.')[0]
   const localeName = localeFile(localeFilePath).name

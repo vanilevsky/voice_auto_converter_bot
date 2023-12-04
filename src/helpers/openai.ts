@@ -1,7 +1,7 @@
-import OpenAI, {toFile} from "openai";
+import OpenAI, { toFile } from "openai";
 import env from "@/helpers/env";
 
-export default async function transcription(buffer: Buffer, fileName: string, lang: string | undefined): Promise<string> {
+export default async function transcription(buffer: Buffer, fileName: string, lang: string | undefined, prompt: string): Promise<string> {
 
     const openai = new OpenAI({
         apiKey: env.OPENAI_API_KEY,
@@ -11,6 +11,7 @@ export default async function transcription(buffer: Buffer, fileName: string, la
         file: await toFile(buffer, fileName),
         model: 'whisper-1',
         language: lang,
+        prompt: prompt
     });
 
     return transcription.text;
