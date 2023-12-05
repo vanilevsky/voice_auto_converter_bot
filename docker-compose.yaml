@@ -8,6 +8,8 @@ services:
       - mongo
     volumes:
       - .:/usr/src/app
+    ports:
+      - 8088:80
 
   mongo:
     image: mongo:4.0

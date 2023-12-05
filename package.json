@@ -9,6 +9,7 @@
   "scripts": {
     "start": "yarn distribute",
     "distribute": "yarn build-ts && node dist/app.js",
+    "server": "yarn build-ts && node dist/index.js",
     "develop": "tsc-watch --skipLibCheck --onSuccess 'node dist/app.js'",
     "build-ts": "tsc --skipLibCheck",
     "pretty": "prettier --check src",
@@ -19,8 +20,10 @@
     "@grammyjs/i18n": "^0.5.0",
     "@grammyjs/menu": "^1.0.4",
     "@grammyjs/runner": "^1.0.3",
+    "@types/express": "^4.17.21",
     "dotenv": "^10.0.0",
     "envalid": "^7.2.2",
+    "express": "^4.18.2",
     "grammy": "^1.5.0",
     "grammy-middlewares": "^1.0.11",
     "mongoose": "^8.0.2",
