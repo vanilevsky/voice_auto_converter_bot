@@ -13,7 +13,7 @@ app.use((req: Request, res: Response, next: express.NextFunction) => {
 });
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World! 2');
+  res.send('ok');
 });
 
 app.listen(port, () => {
