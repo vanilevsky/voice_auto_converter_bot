@@ -1,8 +1,8 @@
 import { Context as BaseContext } from 'grammy'
 import { DocumentType } from '@typegoose/typegoose'
+import { FileFlavor } from '@grammyjs/files'
 import { I18nContext } from '@grammyjs/i18n/dist/source'
 import { User } from '@/models/User'
-import { FileFlavor } from "@grammyjs/files";
 
 class Context extends BaseContext {
   readonly i18n!: I18nContext
