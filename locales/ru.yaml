@@ -5,6 +5,6 @@ language: Пожалуйста, выберите язык.
 language_selected: <b>Бот</b> теперь говорит по-русски.
 whisper_prompt: Исправь все орфографические, грамматические и речевые ошибки. Расставь знаки препинания в соответствии с правилами современного русского языка.
 statistic: |
-  Since ${sinceTime} I have transcribed:
-  — ${voiceTotalCount} voices with a total length of ${voiceTotalLength}.
-  — ${videoNoteTotalCount} video circles with a total length of ${videoNoteTotalLength}
+  С ${sinceTime} я перевел:
+  — ${voiceTotalCount} голосовых сообщений с общей длительностью ${voiceTotalLength}.
+  — ${videoNoteTotalCount} кружочков с общей длительностью ${videoNoteTotalLength}.
