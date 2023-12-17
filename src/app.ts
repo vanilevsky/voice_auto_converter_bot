@@ -9,6 +9,7 @@ import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
 import configureI18n from '@/middlewares/configureI18n'
 import handleLanguage from '@/handlers/language'
+import handleStatistic from '@/handlers/statistic'
 import handleVoices from '@/handlers/voices'
 import i18n from '@/helpers/i18n'
 import languageMenu from '@/menus/language'
@@ -36,6 +37,7 @@ async function runApp() {
   // Commands
   bot.command(['help', 'start'], sendHelp)
   bot.command('language', handleLanguage)
+  bot.command('statistic', handleStatistic)
 
   // Events
   bot.on([':voice', ':video_note'], handleVoices)

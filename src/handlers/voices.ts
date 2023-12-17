@@ -72,5 +72,6 @@ async function updateUserStatistic(
     dbuser.statistic.video_note.duration += message.video_note?.duration || 0
   }
 
+  dbuser.statistic.touch()
   return await dbuser.save()
 }
