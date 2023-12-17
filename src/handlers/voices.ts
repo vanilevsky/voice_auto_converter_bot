@@ -1,26 +1,25 @@
+import { promises as fsPromises } from 'fs'
 import Context from '@/models/Context'
-import bot from "@/helpers/bot";
-import { promises as fsPromises } from "fs";
-import transcription from "@/helpers/openai";
+import bot from '@/helpers/bot'
+import transcription from '@/helpers/openai'
 
 export default async function handleVoices(ctx: Context) {
-
-  const chatId = ctx.message?.chat.id;
+  const chatId = ctx.message?.chat.id
 
   if (chatId === undefined) {
-    console.error("chatId is undefined")
+    console.error('chatId is undefined')
     return
   }
 
-  const file = await ctx.getFile();
-  const fileExt = file.file_path?.split('.').pop();
-  const fileName = file.file_unique_id + '.' + fileExt;
-  const filePath = await file.download('/tmp/' + fileName);
+  const file = await ctx.getFile()
+  const fileExt = file.file_path?.split('.').pop()
+  const fileName = file.file_unique_id + '.' + fileExt
+  const filePath = await file.download('/tmp/' + fileName)
 
   fsPromises.access(filePath).catch(() => {
-    console.error("File does not exist.")
+    console.error('File does not exist.')
     return
-  });
+  })
 
   const buffer = await fsPromises.readFile(filePath)
   const lang = ctx.dbuser.language
@@ -34,7 +33,12 @@ export default async function handleVoices(ctx: Context) {
 
   await fsPromises.unlink(filePath)
 
-  fsPromises.access(filePath).then(() => {
-    console.error("File exists.")
-  }).catch(() => {})
+  fsPromises
+    .access(filePath)
+    .then(() => {
+      console.error('File exists.')
+    })
+    .catch(() => {
+      console.log('')
+    })
 }

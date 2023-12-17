@@ -2,18 +2,18 @@ import 'module-alias/register'
 import 'reflect-metadata'
 import 'source-map-support/register'
 
+import { hydrateFiles } from '@grammyjs/files'
 import { ignoreOld, sequentialize } from 'grammy-middlewares'
 import { run } from '@grammyjs/runner'
 import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
 import configureI18n from '@/middlewares/configureI18n'
 import handleLanguage from '@/handlers/language'
+import handleVoices from '@/handlers/voices'
 import i18n from '@/helpers/i18n'
 import languageMenu from '@/menus/language'
 import sendHelp from '@/handlers/help'
 import startMongo from '@/helpers/startMongo'
-import { hydrateFiles } from "@grammyjs/files";
-import handleVoices from "@/handlers/voices";
 
 async function runApp() {
   console.log('Starting app...')
@@ -38,7 +38,7 @@ async function runApp() {
   bot.command('language', handleLanguage)
 
   // Events
-  bot.on([":voice", ":video_note"], handleVoices)
+  bot.on([':voice', ':video_note'], handleVoices)
 
   // Errors
   bot.catch(console.error)
