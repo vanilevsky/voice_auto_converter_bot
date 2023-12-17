@@ -52,6 +52,8 @@ export class User {
   language!: string
   @prop({ required: true, default: initUserStatistic })
   statistic!: UserStatistic
+  @prop()
+  createdAt!: Date
 }
 
 const UserModel = getModelForClass(User)
