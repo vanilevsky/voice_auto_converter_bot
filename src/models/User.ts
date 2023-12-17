@@ -1,4 +1,13 @@
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
+
+class StatisticTimeStamps extends TimeStamps {
+  constructor() {
+    super()
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
+  }
+}
 
 const initStatistic = <ConvertStatistic>{
   duration: 0,
@@ -28,6 +37,11 @@ export class UserStatistic {
   public voice!: ConvertStatistic
   @prop({ required: true, default: initStatistic })
   public video_note!: ConvertStatistic
+  @prop({ required: true, default: new StatisticTimeStamps() })
+  public timeStamps!: StatisticTimeStamps
+  touch() {
+    this.timeStamps.updatedAt = new Date()
+  }
 }
 
 @modelOptions({ schemaOptions: { timestamps: true } })
