@@ -6,5 +6,5 @@ language_selected: <b>Bot</b> Türkçe konuşuyor.
 whisper_prompt: Tüm yazım, dil bilgisi ve konuşma hatalarını düzeltin. Noktalama işaretlerini modern Türkçe dil kurallarına uygun olarak yerleştirin.
 statistic: |
   ${sinceTime} tarihinden bu yana transkript oluşturdum:
-  — Toplam süresi ${voiceTotalLength} olan ${voiceTotalCount} adet ses
-  — Toplam süresi ${videoNoteTotalLength} olan ${videoNoteTotalCount} adet video not
+  • Toplam süresi ${voiceTotalLength} olan ${voiceTotalCount} adet ses
+  • Toplam süresi ${videoNoteTotalLength} olan ${videoNoteTotalCount} adet video not

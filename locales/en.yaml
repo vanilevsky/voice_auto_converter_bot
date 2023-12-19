@@ -6,5 +6,5 @@ language_selected: <b>This bot</b> now speaks English.
 whisper_prompt: Correct all spelling, grammatical, and speech errors. Place punctuation marks in accordance with the rules of the modern English language.
 statistic: |
   Since ${sinceTime} I have transcribed:
-  — Voices: ${voiceTotalCount} (total ${voiceTotalLength} sec)
-  — Video circles: ${videoNoteTotalCount} (total ${videoNoteTotalLength} sec)
+  • ${voiceTotalCount} (${voiceTotalLength} sec) — voices
+  • ${videoNoteTotalCount} (${videoNoteTotalLength} sec) — video circles
