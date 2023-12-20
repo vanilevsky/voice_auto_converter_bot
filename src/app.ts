@@ -9,11 +9,13 @@ import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
 import configureI18n from '@/middlewares/configureI18n'
 import handleLanguage from '@/handlers/language'
+import handleSettings from '@/handlers/settings'
 import handleStatistic from '@/handlers/statistic'
 import handleVoices from '@/handlers/voices'
 import i18n from '@/helpers/i18n'
 import languageMenu from '@/menus/language'
 import sendHelp from '@/handlers/help'
+import settingsMenu from '@/menus/settings'
 import startMongo from '@/helpers/startMongo'
 
 async function runApp() {
@@ -30,6 +32,7 @@ async function runApp() {
     .use(configureI18n)
     // Menus
     .use(languageMenu)
+    .use(settingsMenu)
 
   // Plugins
   bot.api.config.use(hydrateFiles(bot.token))
@@ -38,6 +41,7 @@ async function runApp() {
   bot.command(['help', 'start'], sendHelp)
   bot.command('language', handleLanguage)
   bot.command('statistic', handleStatistic)
+  bot.command('settings', handleSettings)
 
   // Events
   bot.on([':voice', ':video_note'], handleVoices)
