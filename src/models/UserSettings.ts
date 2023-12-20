@@ -26,14 +26,14 @@ export const AvailableLevels: Level[] = [
   },
 ]
 
-const defaultLevelCode = LevelsCodes.easy
+const defaultLevelCode = LevelsCodes.medium
 
 const defaultUserSettings = <UserSettings>{
   level: defaultLevelCode,
 }
 
 export class UserSettings {
-  @prop({ required: true, default: 0 })
+  @prop({ required: true, default: defaultLevelCode })
   public level!: LevelsCodes
   static getDefault() {
     return defaultUserSettings
