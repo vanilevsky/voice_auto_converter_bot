@@ -8,3 +8,9 @@ statistic: |
   С ${sinceTime} я сконвертировал:
   • ${voiceTotalCount} (${voiceTotalLength} сек) — голосовых сообщений
   • ${videoNoteTotalCount} (${videoNoteTotalLength} cек) — видео кружочков
+settings: Возможные настройки
+settings_level_selected: Выбранный уровень
+level_easy: Простой
+level_medium: Нормальный
+level_hard: Глубокий
+level_unknown: Unknown
