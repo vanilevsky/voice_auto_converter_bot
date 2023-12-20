@@ -1,5 +1,5 @@
-import { UserSettings, initUserSettings } from '@/models/UserSettings'
-import { UserStatistic, initUserStatistic } from '@/models/UserStatistic'
+import { UserSettings } from '@/models/UserSettings'
+import { UserStatistic } from '@/models/UserStatistic'
 import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
 
 @modelOptions({ schemaOptions: { timestamps: true } })
@@ -8,9 +8,9 @@ export class User {
   id!: number
   @prop({ required: true, default: 'ru' })
   language!: string
-  @prop({ required: true, default: initUserStatistic })
+  @prop({ required: true, default: UserStatistic.getDefault() })
   statistic!: UserStatistic
-  @prop({ required: true, default: initUserSettings })
+  @prop({ required: true, default: UserSettings.getDefault() })
   settings!: UserSettings
   @prop()
   createdAt!: Date

@@ -16,7 +16,7 @@ const initStatistic = <ConvertStatistic>{
   count_group: 0,
 }
 
-export const initUserStatistic = <UserStatistic>{
+const defaultUserStatistic = <UserStatistic>{
   voice: initStatistic,
   video_note: initStatistic,
 }
@@ -41,5 +41,8 @@ export class UserStatistic {
   public timeStamps!: StatisticTimeStamps
   touch() {
     this.timeStamps.updatedAt = new Date()
+  }
+  static getDefault() {
+    return defaultUserStatistic
   }
 }
