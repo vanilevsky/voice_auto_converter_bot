@@ -3,16 +3,8 @@ help: |
   <b>Bot</b> for transcribing voice messages and circles into text.
 language: Please, select the language.
 language_selected: <b>This bot</b> now speaks English.
-whisper_prompt_easy: well like let everything be as it was
-whisper_prompt: Make it without mistakes, please.
-whisper_prompt_hard: "Good", she said. Make it without mistakes, please.
+whisper_prompt: Correct all spelling, grammatical, and speech errors. Place punctuation marks in accordance with the rules of the modern English language.
 statistic: |
-  Since ${sinceTime}, I have transcribed:
+  Since ${sinceTime} I have transcribed:
   • ${voiceTotalCount} (${voiceTotalLength} sec) — voices
   • ${videoNoteTotalCount} (${videoNoteTotalLength} sec) — video circles
-settings: Possible settings
-settings_level_selected: Selected level
-level_easy: Easy
-level_medium: Normal
-level_hard: Deep
-level_unknown: Unknown
