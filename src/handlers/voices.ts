@@ -1,4 +1,6 @@
+import * as console from 'console'
 import { DocumentType } from '@typegoose/typegoose'
+import { LevelsCodes } from '@/models/UserSettings'
 import { Message } from 'grammy/types'
 import { User } from '@/models/User'
 import { promises as fsPromises } from 'fs'
@@ -26,7 +28,21 @@ export default async function handleVoices(ctx: Context) {
 
   const buffer = await fsPromises.readFile(filePath)
   const lang = ctx.dbuser.language
-  const prompt = ctx.i18n.t('whisper_prompt')
+  const userLevel = ctx.dbuser.settings.level
+
+  let prompt: string
+
+  switch (userLevel) {
+    case LevelsCodes.easy:
+      prompt = ctx.i18n.t('whisper_prompt_easy')
+      break
+    case LevelsCodes.hard:
+      prompt = ctx.i18n.t('whisper_prompt_hard')
+      break
+    default:
+      prompt = ctx.i18n.t('whisper_prompt')
+  }
+
   const transcriptionText = await transcription(buffer, fileName, lang, prompt)
 
   const text = '🔊 ' + transcriptionText
