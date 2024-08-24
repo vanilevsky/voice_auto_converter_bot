@@ -1,4 +1,5 @@
 import * as console from 'console'
+import * as ffmpeg from 'fluent-ffmpeg'
 import { DocumentType } from '@typegoose/typegoose'
 import { LevelsCodes } from '@/models/UserSettings'
 import { Message } from 'grammy/types'
@@ -43,7 +44,25 @@ export default async function handleVoices(ctx: Context) {
       prompt = ctx.i18n.t('whisper_prompt')
   }
 
+  const isAudioValid = await validateAudio(filePath, 1.5)
+  if (!isAudioValid) {
+    console.error('Audio is too short to transcribe.')
+    await fsPromises.unlink(filePath)
+    return
+  }
+
   const transcriptionText = await transcription(buffer, fileName, lang, prompt)
+
+  const skippedAnswers = [
+    'Редактор субтитров А.Семкин Корректор А.Егорова',
+    'Продолжение следует...',
+  ]
+
+  if (skippedAnswers.includes(transcriptionText)) {
+    console.error('Bug with transcription:', transcriptionText)
+    await fsPromises.unlink(filePath)
+    return
+  }
 
   const text = '🔊 ' + transcriptionText
   await bot.api.sendMessage(chatId, text, {
@@ -64,6 +83,28 @@ export default async function handleVoices(ctx: Context) {
     .catch(() => {
       console.log('')
     })
+}
+
+async function validateAudio(
+  filePath: string,
+  minAudioDuration: number
+): Promise<boolean> {
+  try {
+    const metadata = await new Promise<ffmpeg.FfprobeData>(
+      (resolve, reject) => {
+        ffmpeg.ffprobe(filePath, (err, data) => {
+          if (err) return reject(err)
+          resolve(data)
+        })
+      }
+    )
+
+    const duration = metadata.format.duration as number
+    return duration > minAudioDuration
+  } catch (err) {
+    console.error('Error analyzing audio:', err)
+    return false
+  }
 }
 
 async function updateUserStatistic(

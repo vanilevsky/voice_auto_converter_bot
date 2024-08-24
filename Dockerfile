@@ -4,6 +4,7 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
+RUN apk update && apk add --no-cache ffmpeg
 COPY ./ /usr/src/app
 
 RUN yarn install
