@@ -5,6 +5,34 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@amplitude/analytics-core@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "@amplitude/analytics-core@npm:1.2.5"
+  dependencies:
+    "@amplitude/analytics-types": ^1.3.4
+    tslib: ^2.4.1
+  checksum: e0ad121360d21acb811aa7b8728479cbe177948dbfa875b6234b127d3a25fa67bdcc96c42ae20ce20adef34de49ea1db743e47ff1ecefe50273e6a3db8d12dbd
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-node@npm:^1.3.6":
+  version: 1.3.6
+  resolution: "@amplitude/analytics-node@npm:1.3.6"
+  dependencies:
+    "@amplitude/analytics-core": ^1.2.5
+    "@amplitude/analytics-types": ^1.3.4
+    tslib: ^2.4.1
+  checksum: 5df1abd46ef53d2145c4cafdb862b6f953984cc57b0c35182c36f03b7b64a5a267d7091ca9fa35c2580cf6c82852ad153e042ba42d5a99ca5f1ea4706a5df410
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-types@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "@amplitude/analytics-types@npm:1.3.4"
+  checksum: 664ea9ab68f834680d9b91d7b867798e5823ee8977ee9d4d351977c023d9e3507d73bcdc601d1aa332b62052c97fe45cef06a4d225753dd215eab6e6b8776eb2
+  languageName: node
+  linkType: hard
+
 "@eslint-community/eslint-utils@npm:^4.2.0":
   version: 4.4.0
   resolution: "@eslint-community/eslint-utils@npm:4.4.0"
@@ -2769,6 +2797,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.4.1":
+  version: 2.8.0
+  resolution: "tslib@npm:2.8.0"
+  checksum: de852ecd81adfdb4870927e250763345f07dc13fe7f395ce261424966bb122a0992ad844c3ec875c9e63e72afe2220a150712984e44dfd1a8a7e538a064e3d46
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^2.6.3":
   version: 2.7.0
   resolution: "tslib@npm:2.7.0"
@@ -2914,6 +2949,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "voice_auto_converter_bot@workspace:."
   dependencies:
+    "@amplitude/analytics-node": ^1.3.6
     "@grammyjs/files": ^1.0.4
     "@grammyjs/i18n": ^0.5.0
     "@grammyjs/menu": ^1.0.4
