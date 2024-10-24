@@ -12,7 +12,7 @@ function initAmplitude() {
 function trackEvent(
   ctx: Context,
   eventName: string,
-  eventProperties: Record<string, any>
+  eventProperties: Record<string, string | number>
 ) {
   const userId = ctx.from?.id.toString()
 
