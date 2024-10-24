@@ -5,6 +5,7 @@ import { LevelsCodes } from '@/models/UserSettings'
 import { Message } from 'grammy/types'
 import { User } from '@/models/User'
 import { promises as fsPromises } from 'fs'
+import { trackEvent } from '@/helpers/amplitude'
 import Context from '@/models/Context'
 import bot from '@/helpers/bot'
 import transcription from '@/helpers/openai'
@@ -12,8 +13,25 @@ import transcription from '@/helpers/openai'
 export default async function handleVoices(ctx: Context) {
   const chatId = ctx.message?.chat.id
 
+  const isVoice = !!ctx.message?.voice
+  const isVideoNote = !!ctx.message?.video_note
+
+  const eventProperties = {
+    type: isVoice ? 'voice' : isVideoNote ? 'video_note' : 'unknown',
+    chatId: chatId,
+    chatType: ctx.message?.chat.type,
+    reason: '',
+    duration:
+      ctx.message?.voice?.duration || ctx.message?.video_note?.duration || 0,
+  }
+
   if (chatId === undefined) {
-    console.error('chatId is undefined')
+    const reason = 'chatId is undefined'
+
+    console.error(reason)
+    eventProperties.reason = reason
+
+    trackEvent(ctx, 'message_failed', eventProperties)
     return
   }
 
@@ -23,7 +41,12 @@ export default async function handleVoices(ctx: Context) {
   const filePath = await file.download('/tmp/' + fileName)
 
   fsPromises.access(filePath).catch(() => {
-    console.error('File does not exist.')
+    const reason = 'File does not exist'
+
+    console.error(reason)
+    eventProperties.reason = reason
+
+    trackEvent(ctx, 'message_failed', eventProperties)
     return
   })
 
@@ -46,7 +69,13 @@ export default async function handleVoices(ctx: Context) {
 
   const isAudioValid = await validateAudio(filePath, 1.5)
   if (!isAudioValid) {
-    console.error('Audio is too short to transcribe.')
+    const reason = 'Audio is too short to transcribe'
+
+    console.error(reason)
+    eventProperties.reason = reason
+
+    trackEvent(ctx, 'message_failed', eventProperties)
+
     await fsPromises.unlink(filePath)
     return
   }
@@ -59,7 +88,13 @@ export default async function handleVoices(ctx: Context) {
   ]
 
   if (skippedAnswers.includes(transcriptionText)) {
-    console.error('Bug with transcription:', transcriptionText)
+    const reason = 'Bug with transcription'
+
+    console.error(reason)
+    eventProperties.reason = reason
+
+    trackEvent(ctx, 'message_failed', eventProperties)
+
     await fsPromises.unlink(filePath)
     return
   }
@@ -73,6 +108,7 @@ export default async function handleVoices(ctx: Context) {
     await updateUserStatistic(ctx.dbuser, ctx.message)
   }
 
+  trackEvent(ctx, 'message_received', eventProperties)
   await fsPromises.unlink(filePath)
 
   fsPromises
