@@ -1,4 +1,3 @@
-import * as console from 'console'
 import * as ffmpeg from 'fluent-ffmpeg'
 import { DocumentType } from '@typegoose/typegoose'
 import { LevelsCodes } from '@/models/UserSettings'
@@ -6,6 +5,7 @@ import { Message } from 'grammy/types'
 import { User } from '@/models/User'
 import { promises as fsPromises } from 'fs'
 import { trackEvent } from '@/helpers/amplitude'
+import { logger } from '@/helpers/logger'
 import Context from '@/models/Context'
 import bot from '@/helpers/bot'
 import transcription from '@/helpers/openai'
@@ -28,7 +28,7 @@ export default async function handleVoices(ctx: Context) {
   if (chatId === undefined) {
     const reason = 'chatId is undefined'
 
-    console.error(reason)
+    logger.error(reason, { userId: ctx.from?.id })
     eventProperties.reason = reason
 
     trackEvent(ctx, 'message_failed', eventProperties)
@@ -43,7 +43,7 @@ export default async function handleVoices(ctx: Context) {
   fsPromises.access(filePath).catch(() => {
     const reason = 'File does not exist'
 
-    console.error(reason)
+    logger.error(reason, { userId: ctx.from?.id, fileName })
     eventProperties.reason = reason
 
     trackEvent(ctx, 'message_failed', eventProperties)
@@ -71,7 +71,11 @@ export default async function handleVoices(ctx: Context) {
   if (!isAudioValid) {
     const reason = 'Audio is too short to transcribe'
 
-    console.error(reason)
+    logger.warn(reason, { 
+      userId: ctx.from?.id, 
+      fileName, 
+      fileSize: buffer.length 
+    })
     eventProperties.reason = reason
 
     trackEvent(ctx, 'message_failed', eventProperties)
@@ -90,7 +94,11 @@ export default async function handleVoices(ctx: Context) {
   if (skippedAnswers.includes(transcriptionText)) {
     const reason = 'Bug with transcription'
 
-    console.error(reason)
+    logger.error(reason, { 
+      userId: ctx.from?.id, 
+      transcriptionText, 
+      fileName 
+    })
     eventProperties.reason = reason
 
     trackEvent(ctx, 'message_failed', eventProperties)
@@ -108,16 +116,23 @@ export default async function handleVoices(ctx: Context) {
     await updateUserStatistic(ctx.dbuser, ctx.message)
   }
 
+  logger.info('Message successfully transcribed', {
+    userId: ctx.from?.id,
+    messageType: eventProperties.type,
+    messageDuration: eventProperties.duration,
+    chatType: eventProperties.chatType
+  })
+  
   trackEvent(ctx, 'message_received', eventProperties)
   await fsPromises.unlink(filePath)
 
   fsPromises
     .access(filePath)
     .then(() => {
-      console.error('File exists.')
+      logger.error('File still exists after deletion', { filePath })
     })
     .catch(() => {
-      console.log('')
+      logger.debug('File successfully deleted', { filePath })
     })
 }
 
@@ -138,7 +153,7 @@ async function validateAudio(
     const duration = metadata.format.duration as number
     return duration > minAudioDuration
   } catch (err) {
-    console.error('Error analyzing audio:', err)
+    logger.error('Error analyzing audio', { error: err, filePath })
     return false
   }
 }

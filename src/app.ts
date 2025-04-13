@@ -61,11 +61,13 @@ async function runApp() {
   bot.on([':voice', ':video_note'], handleVoices)
 
   // Errors
-  bot.catch(console.error)
+  bot.catch((err) => {
+    logger.error('Unhandled bot error', { error: err.message, stack: err.stack })
+  })
   // Start bot
   await bot.init()
   run(bot)
-  console.info(`Bot ${bot.botInfo.username} is up and running`)
+  logger.info(`Bot ${bot.botInfo.username} is up and running`)
 }
 
 void runApp()
