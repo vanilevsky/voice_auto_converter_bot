@@ -34,4 +34,4 @@ export function initHeartbeat() {
   console.log('Initializing BetterStack heartbeat...')
   sendHeartbeat()
   setInterval(sendHeartbeat, HEARTBEAT_INTERVAL)
-} 
+}

@@ -62,7 +62,10 @@ async function runApp() {
 
   // Errors
   bot.catch((err) => {
-    logger.error('Unhandled bot error', { error: err.message, stack: err.stack })
+    logger.error('Unhandled bot error', {
+      error: err.message,
+      stack: err.stack,
+    })
   })
   // Start bot
   await bot.init()

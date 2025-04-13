@@ -71,10 +71,10 @@ export default async function handleVoices(ctx: Context) {
   if (!isAudioValid) {
     const reason = 'Audio is too short to transcribe'
 
-    logger.warn(reason, { 
-      userId: ctx.from?.id, 
-      fileName, 
-      fileSize: buffer.length 
+    logger.warn(reason, {
+      userId: ctx.from?.id,
+      fileName,
+      fileSize: buffer.length,
     })
     eventProperties.reason = reason
 
@@ -94,10 +94,10 @@ export default async function handleVoices(ctx: Context) {
   if (skippedAnswers.includes(transcriptionText)) {
     const reason = 'Bug with transcription'
 
-    logger.error(reason, { 
-      userId: ctx.from?.id, 
-      transcriptionText, 
-      fileName 
+    logger.error(reason, {
+      userId: ctx.from?.id,
+      transcriptionText,
+      fileName,
     })
     eventProperties.reason = reason
 
@@ -120,9 +120,9 @@ export default async function handleVoices(ctx: Context) {
     userId: ctx.from?.id,
     messageType: eventProperties.type,
     messageDuration: eventProperties.duration,
-    chatType: eventProperties.chatType
+    chatType: eventProperties.chatType,
   })
-  
+
   trackEvent(ctx, 'message_received', eventProperties)
   await fsPromises.unlink(filePath)
 
