@@ -6,6 +6,7 @@ import { hydrateFiles } from '@grammyjs/files'
 import { ignoreOld, sequentialize } from 'grammy-middlewares'
 import { initAmplitude } from '@/helpers/amplitude'
 import { initHeartbeat } from '@/helpers/heartbeat'
+import { initLogger, logger } from '@/helpers/logger'
 import { run } from '@grammyjs/runner'
 import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
@@ -31,6 +32,10 @@ async function runApp() {
 
   // Initialize BetterStack heartbeat
   initHeartbeat()
+
+  // Initialize BetterStack logger
+  initLogger()
+  logger.info('Logger initialized')
 
   bot
     // Middlewares
