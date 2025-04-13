@@ -12,6 +12,7 @@
     "develop": "tsc-watch --skipLibCheck --onSuccess 'node dist/app.js'",
     "build-ts": "tsc --skipLibCheck",
     "pretty": "prettier --check src",
+    "format": "prettier --write src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@grammyjs/i18n": "^0.5.0",
     "@grammyjs/menu": "^1.0.4",
     "@grammyjs/runner": "^1.0.3",
+    "@logtail/node": "^0.4.19",
     "dotenv": "^10.0.0",
     "envalid": "^7.2.2",
     "fluent-ffmpeg": "^2.1.3",

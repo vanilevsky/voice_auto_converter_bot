@@ -5,8 +5,9 @@ import 'source-map-support/register'
 import { hydrateFiles } from '@grammyjs/files'
 import { ignoreOld, sequentialize } from 'grammy-middlewares'
 import { initAmplitude } from '@/helpers/amplitude'
-import { initHeartbeat } from '@/helpers/heartbeat'
+import { initLogger, logger } from '@/helpers/logger'
 import { run } from '@grammyjs/runner'
+
 import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
 import configureI18n from '@/middlewares/configureI18n'
@@ -15,6 +16,7 @@ import handleSettings from '@/handlers/settings'
 import handleStatistic from '@/handlers/statistic'
 import handleVoices from '@/handlers/voices'
 import i18n from '@/helpers/i18n'
+import initHeartbeat from '@/helpers/heartbeat'
 import languageMenu from '@/menus/language'
 import sendHelp from '@/handlers/help'
 import settingsMenu from '@/menus/settings'
@@ -31,6 +33,10 @@ async function runApp() {
 
   // Initialize BetterStack heartbeat
   initHeartbeat()
+
+  // Initialize BetterStack logger
+  initLogger()
+  logger.info('Logger initialized')
 
   bot
     // Middlewares
@@ -56,11 +62,16 @@ async function runApp() {
   bot.on([':voice', ':video_note'], handleVoices)
 
   // Errors
-  bot.catch(console.error)
+  bot.catch((err) => {
+    logger.error('Unhandled bot error', {
+      error: err.message,
+      stack: err.stack,
+    })
+  })
   // Start bot
   await bot.init()
   run(bot)
-  console.info(`Bot ${bot.botInfo.username} is up and running`)
+  logger.info(`Bot ${bot.botInfo.username} is up and running`)
 }
 
 void runApp()

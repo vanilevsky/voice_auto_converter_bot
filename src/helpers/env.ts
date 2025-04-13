@@ -12,4 +12,8 @@ export default cleanEnv(process.env, {
   OPENAI_API_KEY: str(),
   AMPLITUDE_API_KEY: str(),
   HEARTBEAT_URL: str(),
+  BETTERSTACK_SOURCE_TOKEN: str(),
+  BETTERSTACK_INGESTING_HOST: str({ default: 'in.logs.betterstack.com' }),
+  APP_NAME: str({ default: 'voice_auto_converter_bot' }),
+  NODE_ENV: str({ default: 'development' }),
 })
