@@ -30,8 +30,10 @@ function sendHeartbeat() {
 /**
  * Initializes heartbeat sending at specified interval
  */
-export function initHeartbeat() {
+function initHeartbeat() {
   console.log('Initializing BetterStack heartbeat...')
   sendHeartbeat()
   setInterval(sendHeartbeat, HEARTBEAT_INTERVAL)
 }
+
+export default initHeartbeat

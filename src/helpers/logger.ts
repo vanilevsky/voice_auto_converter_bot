@@ -17,12 +17,15 @@ const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
   [LogLevel.DEBUG]: 1,
 }
 
+// Type for metadata objects
+type LogMetadata = Record<string, unknown>
+
 // Logging transport interface
 interface LogTransport {
-  error(message: string, meta: Record<string, any>): Promise<any> | void
-  warn(message: string, meta: Record<string, any>): Promise<any> | void
-  info(message: string, meta: Record<string, any>): Promise<any> | void
-  debug(message: string, meta: Record<string, any>): Promise<any> | void
+  error(message: string, meta: LogMetadata): Promise<unknown> | void
+  warn(message: string, meta: LogMetadata): Promise<unknown> | void
+  info(message: string, meta: LogMetadata): Promise<unknown> | void
+  debug(message: string, meta: LogMetadata): Promise<unknown> | void
   getMinLevel(): LogLevel
 }
 
@@ -43,39 +46,33 @@ abstract class BaseTransport implements LogTransport {
     return this.minLevel
   }
 
-  abstract error(
-    message: string,
-    meta: Record<string, any>
-  ): Promise<any> | void
-  abstract warn(message: string, meta: Record<string, any>): Promise<any> | void
-  abstract info(message: string, meta: Record<string, any>): Promise<any> | void
-  abstract debug(
-    message: string,
-    meta: Record<string, any>
-  ): Promise<any> | void
+  abstract error(message: string, meta: LogMetadata): Promise<unknown> | void
+  abstract warn(message: string, meta: LogMetadata): Promise<unknown> | void
+  abstract info(message: string, meta: LogMetadata): Promise<unknown> | void
+  abstract debug(message: string, meta: LogMetadata): Promise<unknown> | void
 }
 
 // Transport for console logging
 class ConsoleTransport extends BaseTransport {
-  error(message: string, meta: Record<string, any>) {
+  error(message: string, meta: LogMetadata) {
     if (this.shouldLog(LogLevel.ERROR)) {
       console.error(message, meta)
     }
   }
 
-  warn(message: string, meta: Record<string, any>) {
+  warn(message: string, meta: LogMetadata) {
     if (this.shouldLog(LogLevel.WARN)) {
       console.warn(message, meta)
     }
   }
 
-  info(message: string, meta: Record<string, any>) {
+  info(message: string, meta: LogMetadata) {
     if (this.shouldLog(LogLevel.INFO)) {
       console.info(message, meta)
     }
   }
 
-  debug(message: string, meta: Record<string, any>) {
+  debug(message: string, meta: LogMetadata) {
     if (this.shouldLog(LogLevel.DEBUG)) {
       console.debug(message, meta)
     }
@@ -85,8 +82,8 @@ class ConsoleTransport extends BaseTransport {
 // Transport for BetterStack logging
 class BetterStackTransport extends BaseTransport {
   private client!: logtail.Logtail
-  private isEnabled: boolean = true
-  private errorLogged: boolean = false
+  private isEnabled = true
+  private errorLogged = false
 
   constructor(
     sourceToken: string,
@@ -97,7 +94,7 @@ class BetterStackTransport extends BaseTransport {
 
     try {
       // Configure BetterStack client with ingestingHost if provided
-      const options: Record<string, any> = {}
+      const options: Record<string, unknown> = {}
 
       if (ingestingHost) {
         options.endpoint = `https://${ingestingHost}`
@@ -110,7 +107,7 @@ class BetterStackTransport extends BaseTransport {
     }
   }
 
-  private handleError(error: any) {
+  private handleError(error: Error | unknown) {
     if (!this.errorLogged) {
       console.error('BetterStack logging error:', error)
       this.errorLogged = true
@@ -120,7 +117,7 @@ class BetterStackTransport extends BaseTransport {
     }
   }
 
-  error(message: string, meta: Record<string, any>) {
+  error(message: string, meta: LogMetadata) {
     if (!this.isEnabled || !this.shouldLog(LogLevel.ERROR)) return
     try {
       return this.client.error(message, meta)
@@ -129,7 +126,7 @@ class BetterStackTransport extends BaseTransport {
     }
   }
 
-  warn(message: string, meta: Record<string, any>) {
+  warn(message: string, meta: LogMetadata) {
     if (!this.isEnabled || !this.shouldLog(LogLevel.WARN)) return
     try {
       return this.client.warn(message, meta)
@@ -138,7 +135,7 @@ class BetterStackTransport extends BaseTransport {
     }
   }
 
-  info(message: string, meta: Record<string, any>) {
+  info(message: string, meta: LogMetadata) {
     if (!this.isEnabled || !this.shouldLog(LogLevel.INFO)) return
     try {
       return this.client.info(message, meta)
@@ -147,7 +144,7 @@ class BetterStackTransport extends BaseTransport {
     }
   }
 
-  debug(message: string, meta: Record<string, any>) {
+  debug(message: string, meta: LogMetadata) {
     if (!this.isEnabled || !this.shouldLog(LogLevel.DEBUG)) return
     try {
       return this.client.debug(message, meta)
@@ -158,7 +155,7 @@ class BetterStackTransport extends BaseTransport {
 }
 
 class Logger {
-  private context: Record<string, any> = {}
+  private context: LogMetadata = {}
   private transports: LogTransport[] = []
 
   constructor() {
@@ -173,7 +170,7 @@ class Logger {
   }
 
   // Set context that will be added to all logs
-  setContext(context: Record<string, any>) {
+  setContext(context: LogMetadata) {
     this.context = { ...this.context, ...context }
     return this
   }
@@ -185,7 +182,7 @@ class Logger {
   }
 
   // Log with ERROR level
-  error(message: string, meta: Record<string, any> = {}) {
+  error(message: string, meta: LogMetadata = {}) {
     const combinedMeta = { ...this.context, ...meta }
     this.transports.forEach((transport) =>
       transport.error(message, combinedMeta)
@@ -194,7 +191,7 @@ class Logger {
   }
 
   // Log with WARN level
-  warn(message: string, meta: Record<string, any> = {}) {
+  warn(message: string, meta: LogMetadata = {}) {
     const combinedMeta = { ...this.context, ...meta }
     this.transports.forEach((transport) =>
       transport.warn(message, combinedMeta)
@@ -203,7 +200,7 @@ class Logger {
   }
 
   // Log with INFO level
-  info(message: string, meta: Record<string, any> = {}) {
+  info(message: string, meta: LogMetadata = {}) {
     const combinedMeta = { ...this.context, ...meta }
     this.transports.forEach((transport) =>
       transport.info(message, combinedMeta)
@@ -212,7 +209,7 @@ class Logger {
   }
 
   // Log with DEBUG level
-  debug(message: string, meta: Record<string, any> = {}) {
+  debug(message: string, meta: LogMetadata = {}) {
     const combinedMeta = { ...this.context, ...meta }
     this.transports.forEach((transport) =>
       transport.debug(message, combinedMeta)
@@ -221,7 +218,7 @@ class Logger {
   }
 
   // Method for compatibility with console.log
-  log(message: string, meta: Record<string, any> = {}) {
+  log(message: string, meta: LogMetadata = {}) {
     return this.info(message, meta)
   }
 }
